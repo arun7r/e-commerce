@@ -1,0 +1,10 @@
+steps
+
+1 npm init
+2 npm i express
+3 import express
+4 nodemon index.js
+5 npm i cors
+6 import cors
+7 app.use cors
+8 npm i mongoose

@@ -1,0 +1,87 @@
+<!-- empty cart -->
+<div class="p2" *ngIf="cartitems.length==0">
+<div class="container border border-primary px-4 p-5 mt-5">
+    <div class="row">
+        <div class="col text-center">
+            <img src="https://www.clickbazar.com/Images/empty-cart.gif" alt="" width="200px">
+            <h3 class="mt-3">Your Cart is Empty</h3>
+            <button routerLink="/" class="btn btn-primary">Shop Now</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- cart with content -->
+<div class="container p4" *ngIf="cartitems.length!=0">
+    <div class="row">
+        <div class="col">
+            <table class="table border border-dark p-5 mt-5">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of cartitems let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{product.title}}</td>
+                        <td><img [src]="product.image" alt="" width="100px"></td>
+                        <td>{{product.description}}</td>
+                        <td>${{product.price}}</td>
+                        <td><i (click)="removeitem(product)" class="fa fa-trash text-danger"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="float:right;" class="mb-3">
+                <button (click)="removeall()" class="btn btn-danger">Empty cart</button> &nbsp;
+                <button class="btn btn-warning">View More</button> &nbsp;
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Check Out</button> &nbsp;
+                <b>Grand Total: ${{grand}}</b>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Check Out Page</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h2> <b>Delivery Address</b> </h2>
+          <form action="" class="form-control p-3 m-3 border border-primary">
+            <input class="form-control" type="text" placeholder="Name"><br>
+            <input class="form-control" type="text" placeholder="Address/House No"><br>
+            <input class="form-control" type="text" placeholder="Pincode"><br>
+            <input class="form-control" type="text" placeholder="State"><br>
+            <input class="form-control" type="text" placeholder="Country"><br>
+            <input class="form-control" type="text" placeholder="Contact Number"><br>
+            <input class="form-control" type="text" placeholder="E-mail Address">
+          </form>
+          <div [ngSwitch]="grand">
+            <h4>Discounts</h4>
+            <img *ngSwitchCase="5" (click)="discount5per($event.target)" src="https://t4.ftcdn.net/jpg/00/98/97/57/360_F_98975745_sgSVAhoA5L8DgfEgoamIEZcKh0J6aBNI.jpg" alt="" width="100px">
+            <img *ngSwitchCase="10" (click)="discount10per()" src="https://www.shutterstock.com/image-vector/10-sale-special-offers-off-260nw-1863594694.jpg" alt="" width="100px">
+            <img *ngSwitchCase="30" (click)="discount30per()" src="https://www.pngitem.com/pimgs/m/123-1232870_30-discount-0-hd-png-download.png" alt="" width="100px">
+            <img *ngSwitchCase="50" (click)="discount50per()" src="https://png.pngtree.com/png-clipart/20201028/ourlarge/pngtree-50-discount-round-sticker-png-image_2376845.jpg" alt="" width="100px">
+            <img *ngSwitchDefault="5" (click)="discount5per($event.target)" src="https://media.istockphoto.com/id/1136155337/vector/promo-code-coupon-code-flat-vector-set-design-illustration-on-white-background.jpg?s=612x612&w=0&k=20&c=sM95EWp2rPqPfp0pGxKi4Jkjgz-0buvGtSSZkNQYIao=" alt="" width="100px">
+          </div>
+          <div>
+            <h5>Your Grand Total: {{updatetotal}}</h5>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" (click)="proceed()" class="btn btn-primary" data-bs-dismiss="modal">Proceed</button>
+        </div>
+      </div>
+    </div>
+  </div>
